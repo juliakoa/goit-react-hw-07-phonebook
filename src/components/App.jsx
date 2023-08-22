@@ -1,37 +1,25 @@
-// App.jsx
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchContacts } from 'store/contactSlice';
 import ContactForm from './ContactForm/ContactForm';
-import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
-import css from './App.module.css';
-import { setFilter } from 'store/filterSlice';
-import { loadContacts } from 'store/contactSlice';
+import Filter from './Filter/Filter';
 
 const App = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.filter.filter);
+  const contacts = useSelector(state => state.contacts);
   const dispatch = useDispatch();
 
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter)
-  );
-
   useEffect(() => {
-    dispatch(loadContacts());
+    dispatch(fetchContacts());
   }, [dispatch]);
 
-  const handleFilterChange = event => {
-    dispatch(setFilter(event.target.value));
-  };
-
   return (
-    <div className={css.container}>
-      <h1 className={css.title}>Phonebook</h1>
+    <div className="app-container">
+      <h1>Phonebook</h1>
       <ContactForm />
-      <h2 className={css.subtitle}>Contacts</h2>
-      <Filter filter={filter} handleFilterChange={handleFilterChange} />
-      <ContactList contacts={filteredContacts} />
+      <h2>Contacts</h2>
+      <Filter />
+      <ContactList contacts={contacts} />
     </div>
   );
 };
