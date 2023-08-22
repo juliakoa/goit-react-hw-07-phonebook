@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addContact } from 'store/contactSlice';
+import css from './ContactForm.module.css';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -17,11 +18,12 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={css.form} onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Name"
         value={name}
+        className={css.input}
         onChange={e => setName(e.target.value)}
       />
       <input
@@ -29,8 +31,11 @@ const ContactForm = () => {
         placeholder="Phone"
         value={phone}
         onChange={e => setPhone(e.target.value)}
+        className={css.input}
       />
-      <button type="submit">Add Contact</button>
+      <button className={css.button} type="submit">
+        Add Contact
+      </button>
     </form>
   );
 };
