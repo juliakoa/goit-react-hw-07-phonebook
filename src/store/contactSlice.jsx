@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
 
 const initialState = {
   contacts: JSON.parse(localStorage.getItem('contacts')) || [
@@ -14,7 +15,11 @@ const contactSlice = createSlice({
   initialState,
   reducers: {
     addContact: (state, action) => {
-      const newContact = action.payload;
+      const newContact = {
+        id: nanoid(),
+        ...action.payload,
+      };
+
       const { name, number } = newContact;
 
       if (
